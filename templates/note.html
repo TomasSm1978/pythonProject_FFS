@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<h1>Note:</h1>
+<hr>
+<div class="row">
+  {% if note %}
+
+  <div class="card border-warning mb-3 m-3" style="max-width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{ note.title }}</h5>
+      {% if note.image %}
+       <img src="{{note.image.url}}" class="card-img-top" alt="...">
+      {% endif %}
+      <p class="text-dark">{{ note.text }}</p>
+    </div>
+    <div class="card-footer bg-transparent border-warning text-right">
+      <small class="text-muted">
+        <a href="#" class="text-dark">{{ note.category.name }}</a>
+      </small>
+    </div>
+  </div>
+
+</div>
+  {% else %}
+  <p>There is no notes in our page, sorry :(.</p>
+  {% endif %}
+{% endblock %}

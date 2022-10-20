@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Categories:</h1>
+  {% for category in categories %}
+    <hr>
+    <li>
+      <p>{{ category.name }}, created by {{ category.owner }}</p>
+      <a href="{% url 'category-update' category.pk %}">Edit</a>
+      <a href="{% url 'category-delete' category.pk %}">Delete</a>
+
+    </li>
+    {% endfor %}
+<br>
+<a class="btn btn-outline-secondary btn-sm" href="{% url 'home' %}">Home</a>
+{% endblock %}
