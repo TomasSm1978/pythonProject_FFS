@@ -8,9 +8,10 @@
 {% endfor %}
 <a href="{% url 'notes' %}" class="text-dark">All categories</a>
 <a href="{% url 'category-new' %}" class="text-dark">New category</a>
+<a href="{% url 'note-new' %}" class="text-dark">New note</a>
 {% endif %}
 <hr>
-<p>Filter: No filter</p>
+<p>Filter: All categories</p>
 <div class="row">
   {% if notes %}
   {% for note in notes %}
@@ -29,6 +30,12 @@
     <div class="card-footer bg-transparent border-warning text-right">
       <small class="text-muted">
         <a href="#" class="text-dark">{{ note.category.name }}</a>
+      </small>
+      <small class="text-muted">
+        <a href="{% url 'note-update' note.pk %}" class="text-dark">Update</a>
+      </small>
+      <small class="text-muted">
+        <a href="{% url 'note-delete' note.pk %}" class="text-dark">Delete</a>
       </small>
     </div>
   </div>

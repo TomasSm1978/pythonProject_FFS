@@ -18,6 +18,12 @@
       <small class="text-muted">
         <a href="#" class="text-dark">{{ note.category.name }}</a>
       </small>
+      <small class="text-muted">
+        <a href="{% url 'note-update' note.pk %}" class="text-dark">Update</a>
+      </small>
+      <small class="text-muted">
+        <a href="{% url 'note-delete' note.pk %}" class="text-dark">Delete</a>
+      </small>
     </div>
   </div>
 

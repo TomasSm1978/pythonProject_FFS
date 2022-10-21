@@ -1,7 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import User, Note, Category
 from django import forms
-
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional')
@@ -11,4 +10,16 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'image')
+
+
+class NewNoteForm(forms.ModelForm):
+
+    class Meta:
+        model = Note
+        fields = ['title', 'text', 'category', 'image']
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(NewNoteForm, self).__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(owner=self.request.user)
 
