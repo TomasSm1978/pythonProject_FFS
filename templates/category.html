@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
+
 <h1>Notes:</h1>
+
 {% if categories %}
 {% for category in categories %}
 <a href="{% url 'category' category.pk %}" class="text-dark">{{ category.name }}</a>
@@ -9,11 +11,12 @@
 <a href="{% url 'notes' %}" class="text-dark">All categories</a>
 <a href="{% url 'category-new' %}" class="text-dark">New category</a>
 {% endif %}
+
 <hr>
-<p>Filter: No filter</p>
+<p>Filter: {{ single_category.name }}</p>
 <div class="row">
-  {% if notes %}
-  {% for note in notes %}
+  {% if single_category %}
+  {% for note in single_category.notes.all %}
   <div class="card border-warning mb-3 m-3" style="max-width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">

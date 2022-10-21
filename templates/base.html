@@ -35,10 +35,11 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 {% for category in categories %}
-                <li><a class="nav-link" href="#">{{ category.name }}</a></li>
+                <li><a class="nav-link" href="{% url 'category' category.pk %}">{{ category.name }}</a></li>
                 {% endfor %}
                 <div class="dropdown-divider"></div>
-                <li><a class="nav-link" href="{% url 'categories' %}">All categories</a></li>
+                <li><a class="nav-link" href="{% url 'notes' %}">All categories</a></li>
+                <li><a class="nav-link" href="{% url 'categories' %}">Edit categories</a></li>
                 <li><a class="nav-link" href="{% url 'category-new' %}">New category</a></li>
               </ul>
 

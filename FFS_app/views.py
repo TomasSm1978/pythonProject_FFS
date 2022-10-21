@@ -49,7 +49,7 @@ def note(request, note_id):
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     fields = ['name']
-    success_url = "/notes"
+    success_url = "/categories"
     template_name = 'category_form.html'
 
     def form_valid(self, form):
@@ -59,7 +59,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
 
 @login_required
 def categories(request):
-    categories = Category.objects.all()
+    categories = Category.objects.filter(owner__exact=request.user)
     context = {
         'categories': categories,
     }
@@ -86,3 +86,14 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     def form_valid(self, form):
         form.owner = self.request.user
         return super().form_valid(form)
+
+
+@login_required
+def category(request, category_id):
+    categories = Category.objects.filter(owner__exact=request.user)
+    single_category = get_object_or_404(Category, pk=category_id)
+    context = {
+        'single_category': single_category,
+        'categories': categories,
+    }
+    return render(request, 'category.html', context=context)
