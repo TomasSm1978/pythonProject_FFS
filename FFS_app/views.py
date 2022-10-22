@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, NewNoteForm, UpdateNoteForm
 from django.contrib.auth import login
-from .models import User, Category, Note
+from .models import Category, Note
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.db.models import Q
@@ -60,8 +60,10 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
 
 @login_required
 def categories(request):
+    notes = Note.objects.filter(owner__exact=request.user)
     categories = Category.objects.filter(owner__exact=request.user)
     context = {
+        'notes': notes,
         'categories': categories,
     }
     return render(request, 'categories.html', context=context)
@@ -146,6 +148,7 @@ class NoteDeleteView(LoginRequiredMixin, DeleteView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+
 
 @login_required
 def search(request):

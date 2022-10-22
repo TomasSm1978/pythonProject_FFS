@@ -17,6 +17,4 @@ urlpatterns = [
    path('accounts/user_profile/', views.user_profile, name='user_profile'),
    path('category/new/', views.CategoryCreateView.as_view(), name='category-new'),
    path('search/', views.search, name='search'),
-
 ]
-

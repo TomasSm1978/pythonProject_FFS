@@ -14,7 +14,7 @@ class SignUpForm(UserCreationForm):
 
 class NewNoteForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Note title'}))
-    text = forms.CharField(widget=forms.Textarea(attrs={'rows': 6, 'placeholder': 'Note text'}))
+    text = forms.CharField(widget=forms.Textarea(attrs={'rows': 10, 'placeholder': 'Note text'}))
     class Meta:
         model = Note
         fields = ['title', 'text', 'category', 'image']
@@ -27,7 +27,7 @@ class NewNoteForm(forms.ModelForm):
 
 class UpdateNoteForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Note title'}))
-    text = forms.CharField(widget=forms.Textarea(attrs={'rows': 6, 'placeholder': 'Note text'}))
+    text = forms.CharField(widget=forms.Textarea(attrs={'rows': 10, 'placeholder': 'Note text'}))
     class Meta:
         model = Note
         fields = ['title', 'text', 'category', 'image']

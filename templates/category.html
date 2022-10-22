@@ -12,7 +12,7 @@
 {% endif %}
 
 <hr>
-<p>Filter: {{ single_category.name }}</p>
+<small><p>Filter: {{ single_category.name }}</p></small>
 <div class="row">
   {% if single_category %}
   {% for note in single_category.notes.all %}
