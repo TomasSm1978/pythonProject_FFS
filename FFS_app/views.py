@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import SignUpForm, NewNoteForm
+from .forms import SignUpForm, NewNoteForm, UpdateNoteForm
 from django.contrib.auth import login
 from .models import User, Category, Note
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
+from django.db.models import Q
 
 
 def home(request):
@@ -120,13 +121,21 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
 
 class NoteUpdateView(LoginRequiredMixin, UpdateView):
     model = Note
-    fields = ['title', 'text', 'category', 'image']
+    form_class = UpdateNoteForm
     success_url = "/notes"
     template_name = 'note_update_form.html'
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        """ Passes the request object to the form class.
+         This is necessary to only display categories that belong to a given user"""
+
+        kwargs = super(NoteUpdateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
 
 class NoteDeleteView(LoginRequiredMixin, DeleteView):
@@ -137,3 +146,9 @@ class NoteDeleteView(LoginRequiredMixin, DeleteView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+
+@login_required
+def search(request):
+    query = request.GET.get('query')
+    search_results = Note.objects.filter(Q(title__icontains=query) | Q(text__icontains=query))
+    return render(request, 'search.html', {'notes': search_results, 'query': query})

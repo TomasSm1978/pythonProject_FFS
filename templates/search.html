@@ -1,20 +1,13 @@
 {% extends "base.html" %}
+
 {% block content %}
-{% load static %}
-<h1>Notes:</h1>
-{% if categories %}
-{% for category in categories %}
-<a href="{% url 'category' category.pk %}" class="m-1 text-dark">{{ category.name }}</a>
-{% endfor %}
-<a href="{% url 'notes' %}" class="text-dark">All categories</a>
-{% endif %}
-<hr>
-<p>Filter: All categories</p>
+  <h1>Search by "{{query}}" results:</h1>
+  </br>
 <div class="row">
   {% if notes %}
   {% for note in notes %}
   <div class="card border-warning mb-3 m-3" style="max-width: 18rem;">
-    <div class="card-body text-justify">
+    <div class="card-body">
       <h5 class="card-title">
         <a href="{% url 'note' note.pk %}" class="text-dark"> {{ note.title }} </a>
       </h5>
@@ -23,7 +16,7 @@
         <img src="{{note.image.url}}" class="card-img-top" alt="...">
       </a>
       {% endif %}
-      <a href="{% url 'note' note.pk %}" class="text-dark">{{ note.text|truncatewords:20 }}</a>
+      <a href="{% url 'note' note.pk %}" class="text-dark" >{{ note.text|truncatewords:20 }}</a>
     </div>
     <div class="card-footer bg-transparent border-warning text-right">
       <small class="text-muted m-3">
@@ -44,6 +37,7 @@
   {% endfor %}
 </div>
   {% else %}
-  <p>There is no notes in our page, sorry :(.</p>
+    <p>Oops. Nothing has been found :(</p>
   {% endif %}
-{% endblock %}
+
+  {% endblock %}

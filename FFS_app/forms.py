@@ -13,7 +13,8 @@ class SignUpForm(UserCreationForm):
 
 
 class NewNoteForm(forms.ModelForm):
-
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Note title'}))
+    text = forms.CharField(widget=forms.Textarea(attrs={'rows': 6, 'placeholder': 'Note text'}))
     class Meta:
         model = Note
         fields = ['title', 'text', 'category', 'image']
@@ -23,3 +24,15 @@ class NewNoteForm(forms.ModelForm):
         super(NewNoteForm, self).__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.filter(owner=self.request.user)
 
+
+class UpdateNoteForm(forms.ModelForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Note title'}))
+    text = forms.CharField(widget=forms.Textarea(attrs={'rows': 6, 'placeholder': 'Note text'}))
+    class Meta:
+        model = Note
+        fields = ['title', 'text', 'category', 'image']
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(UpdateNoteForm, self).__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(owner=self.request.user)
