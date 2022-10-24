@@ -86,10 +86,6 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     success_url = "/categories"
     template_name = 'category_delete_form.html'
 
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
-
 
 @login_required
 def category(request, category_id):

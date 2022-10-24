@@ -14,7 +14,7 @@
 <hr>
 <small><p>Filter: {{ single_category.name }}</p></small>
 <div class="row">
-  {% if single_category %}
+  {% if single_category.notes.all %}
   {% for note in single_category.notes.all %}
   <div class="card border-warning mb-3 m-3" style="max-width: 18rem;">
     <div class="card-body text-justify">
